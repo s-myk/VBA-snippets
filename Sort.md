@@ -5,7 +5,8 @@
 
     ```
     .DataBodyRange.Sort _
-        key1:= .ListColumns(1).Range, order1:=xlAscending
+        key1:=.ListColumns(1).Range, order1:=xlAscending, _
+        Header:=xlYes
     ```
 
 1. Sort オブジェクト  
@@ -15,11 +16,12 @@
     With .Sort
         With .SortFields
             .Clear
-            .Add Key:=.Parent.Parent.ListColumns(3).Range, _
+            .Add Key:=.Parent.Parent.ListColumns(1).Range, _
                 SortOn:=xlSortOnValues, _
-            Order:=xlAscending, _
-            DataOption:=xlSortNormal
+                Order:=xlAscending, _
+                DataOption:=xlSortNormal
         End With
+        .Header = xlYes
         .MatchCase = False
         .SortMethod = xlStroke
         .Apply
