@@ -1,4 +1,4 @@
-## Sort メソッド, Sort オブジェクト on ListObject
+## Sort メソッド, Sort オブジェクト
 
 1. Sort メソッド  
    https://excelwork.info/excel/cellsortmethod/
