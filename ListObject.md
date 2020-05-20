@@ -46,25 +46,23 @@
 - 初期化 (1行目の数式と表示形式を残す)
 
     ```
-    Dim i As Long, 数式 As String, 表示形式 As String
     If .ListRows.Count >= 2 Then
         .DataBodyRange(2, 1).Resize(.ListRows.Count - 1, .ListColumns.Count).Delete
     End If
+
     If .ListRows.Count > 0 Then
+        With .ListRows(1).Range
+            .Font.ColorIndex = xlAutomatic
+            .Font.Bold = False
+            .Interior.ColorIndex = xlNone
+        End With
+        
         For i = 1 To .ListColumns.Count
-            With .ListRows(1).Range(i)
-                数式 = vbNullString
-                If .Value <> "=*" Then
-                    数式 = .Value
-                End If
-                表示形式 = .NumberFormatLocal
-                .Clear
-                .Value = 数式
-                .NumberFormatLocal = 表示形式
-            End With
+            If Not .DataBodyRange(1, i).HasFormula Then
+                .DataBodyRange(1, i).ClearContents
+            End If
         Next
-    Else
+    Else '.ListRows.Count = 0 Then
         .ListRows.Add
-        .ListRows(1).Range.Clear
     End If
     ```
