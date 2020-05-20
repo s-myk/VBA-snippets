@@ -2,6 +2,7 @@
 
 - `.HeaderRowRange`
   + `.DataBodyRange`が存在しない場合、`.HeaderRowRange`からアドレスが取得できる。
+  + ヘッダー行の表示/非表示: `tbl.ShowHeaders = True/False`
 - `.DataBodyRange`
   + `Cells`と同じような使い方  
   → `.DataBodyRange(1, 1)`
@@ -41,10 +42,29 @@
 
 - テーブルのフィルタの設定解除
   + `.ShowAutoFilter = False: .ShowAutoFilter = True`
-- 書式がおかしくならないように、リストの1行目だけ残して削除する方法 (1行目の書式を残す)
-    ```
-    Dim i As Long
-    For i = 2 To .ListRows.Count: .ListRows(i).Delete: Next
-    .ListRows(1).Range.ClearContents
-    ```
 
+- 初期化 (1行目の数式と表示形式を残す)
+
+    ```
+    Dim i As Long, 数式 As String, 表示形式 As String
+    If .ListRows.Count >= 2 Then
+        .DataBodyRange(2, 1).Resize(.ListRows.Count - 1, .ListColumns.Count).Delete
+    End If
+    If .ListRows.Count > 0 Then
+        For i = 1 To .ListColumns.Count
+            With .ListRows(1).Range(i)
+                数式 = vbNullString
+                If .Value <> "=*" Then
+                    数式 = .Value
+                End If
+                表示形式 = .NumberFormatLocal
+                .Clear
+                .Value = 数式
+                .NumberFormatLocal = 表示形式
+            End With
+        Next
+    Else
+        .ListRows.Add
+        .ListRows(1).Range.Clear
+    End If
+    ```
