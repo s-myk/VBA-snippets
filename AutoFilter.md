@@ -11,21 +11,23 @@
    - オートフィルターの絞り込みの解除: `ws.AutoFilter.ShowAll` (*2)
    - オートフィルターの削除1: `ws.AutoFilterMode = False` (*1)
    - オートフィルターの削除2: `ws.AutoFilter.Range.AutoFilter` (*1)
-   - (*1 `ws.AutoFilterMode = False`の時に実行するとエラー)   
+   - (*1 `ws.AutoFilterMode = False`の時に参照/実行するとエラー)   
    (*2 `ws.AutoFilter.FilterMode = False`の時に実行するとエラー)
 3. ListObject
    - オートフィルターの有無: `lo.ShowAutoFilter`
    - オートフィルターの絞り込みの有無: `lo.AutoFilter.FilterMode` (*3)
    - オートフィルターの絞り込みの解除1: `lo.ShowAutoFilter = False` → True
    - オートフィルターの絞り込みの解除2: `lo.AutoFilter.ShowAll` (*4)
-   - (*3 `lo.ShowAutoFilter = False`の時に実行するとエラー)   
-   (*4 `lo.AutoFilter.FilterMode = False`の時に実行するとエラー)
    - オートフィルターの絞り込みの解除3: `For i = 1 To .ListColumns.Count: .Range.AutoFilter Field:=i: Next` (*3)
    - オートフィルターの解除: `lo.ShowAutoFilter = False` (TrueとFalseでフィルタボタンの表示切替)
+   - (*3 `lo.ShowAutoFilter = False`の時に参照するとエラー)   
+   (*4 `lo.AutoFilter.FilterMode = False`の時に実行するとエラー)
 * * *
 フィルタのOn/Off (ListObjectでのサンプル)：
 ```
-If .AutoFilter.FilterMode Then
+If .ShowAutoFilter = False Then
+    ' do Nothing
+ElseIf .AutoFilter.FilterMode Then
     .AutoFilter.ShowAllData
 Else
     .Range.AutoFilter Field:=1, Criteria1:=Array("="), Operator:=xlFilterValues, _
