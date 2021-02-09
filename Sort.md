@@ -1,5 +1,7 @@
 # Sort メソッド, Sort オブジェクト
 
+## ListObject に対する Sort
+
 1. Sort メソッド  
    https://excelwork.info/excel/cellsortmethod/
 
