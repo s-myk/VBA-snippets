@@ -1,21 +1,22 @@
-## VBAのHTMLDocument
+# VBA の HTMLDocument
 
-- htmlDocへのhtmlソースコードの書き込み
+- htmlDoc への html ソースコードの書き込み
 
-    ```
-    Dim iHtmlDoc As MSHTML.IHTMLDocument, htmlDoc As MSHTML.HTMLDocument
-    Set iHtmlDoc = New MSHTML.HTMLDocument
-    iHtmlDoc.write "ソースコード"
-    'iHtmlDoc.getElementsByTagName("html")(0).innerHTML = "ソースコード"
-    Set htmlDoc = iHtmlDoc
-    ```
-- bodyへのhtmlソースコードの書き込み
+  ```vb
+  Dim iHtmlDoc As MSHTML.IHTMLDocument, htmlDoc As MSHTML.HTMLDocument
+  Set iHtmlDoc = New MSHTML.HTMLDocument
+  iHtmlDoc.write "ソースコード"
+  'iHtmlDoc.getElementsByTagName("html")(0).innerHTML = "ソースコード"
+  Set htmlDoc = iHtmlDoc
+  ```
 
-    ```
-    Dim htmlDoc As MSHTML.HTMLDocument
-    Set htmlDoc = New MSHTML.HTMLDocument
-    htmlDoc.body.innerHTML = “ソースコード”
-    ```
+- body への html ソースコードの書き込み
+
+  ```vb
+  Dim htmlDoc As MSHTML.HTMLDocument
+  Set htmlDoc = New MSHTML.HTMLDocument
+  htmlDoc.body.innerHTML = “ソースコード”
+  ```
 
 - DocumentElement (the root element of the document)  
   例. htmlDoc.DocumentElement.outerHTML  
