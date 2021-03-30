@@ -1,11 +1,14 @@
 # AutoFilter の使い方
 
-状態の確認と初期化：
+## 状態の確認と初期化
 
 1. Worksheet とそこに含まれる ListObject に対しての操作
+
    - 絞り込みの有無: `ws.FilterMode`
    - 絞り込みの解除: `ws.ShowAllData` (.FilterMode = False の時に実行するとエラー)
+
 2. Worksheet
+
    - オートフィルターの有無: `ws.AutoFilterMode`
    - オートフィルターの絞り込みの有無: `ws.AutoFilter.FilterMode` (\*1)
    - オートフィルターが設定されている範囲: `ws.AutoFilter.Range` (\*1)
@@ -14,6 +17,7 @@
    - オートフィルターの削除 2: `ws.AutoFilter.Range.AutoFilter` (\*1)
    - (*1 `ws.AutoFilterMode = False`の時に参照/実行するとエラー)  
      (*2 `ws.AutoFilter.FilterMode = False`の時に実行するとエラー)
+
 3. ListObject
    - オートフィルターの有無: `lo.ShowAutoFilter`
    - オートフィルターの絞り込みの有無: `lo.AutoFilter.FilterMode` (\*3)
@@ -24,29 +28,38 @@
    - (*3 `lo.ShowAutoFilter = False`の時に参照するとエラー)  
      (*4 `lo.AutoFilter.FilterMode = False`の時に実行するとエラー)
 
----
+## フィルタの On/Off (ListObject でのサンプル)
 
-フィルタの On/Off (ListObject でのサンプル)：
+- 複数の条件に合致するフィルタ (xlFilterValues を使用)
 
-```vb
-If .ShowAutoFilter = False Then
-    ' do Nothing
-ElseIf .AutoFilter.FilterMode Then
-    .AutoFilter.ShowAllData
-Else
-    .Range.AutoFilter Field:=1, Criteria1:=Array("="), Operator:=xlFilterValues, _
-        Criteria2:=Array(2, "1926/12/25", 2, "1989/1/8", 2, "2019/5/1")
-End If
-```
+  ```vb
+  If .ShowAutoFilter = False Then
+      ' オートフィルタが存在しない場合は何もしない
+      ' do Nothing
+  ElseIf .AutoFilter.FilterMode Then
+      ' すでにオートフィルタでの絞り込みが行われている場合は、絞り込みを解除
+      .AutoFilter.ShowAllData
+  Else
+      ' 絞り込みが行われていない場合は、複数の条件を指定して絞り込み
+      .Range.AutoFilter Field:=1, Criteria1:=Array("="), Operator:=xlFilterValues, _
+          Criteria2:=Array(2, "1926/12/25", 2, "1989/1/8", 2, "2019/5/1")
+  End If
+  ```
 
----
+- 1 つの条件に合致するフィルタ
 
-`.AutoFilter Field:=iCol, Criteria1:="<4/30/2019"` ‘以前  
-`.AutoFilter Field:=iCol, Criteria1:=">=1/8/1989"` ‘以降
+  ```vb
+  '以前
+  .AutoFilter Field:=iCol, Criteria1:="<4/30/2019"
 
-xlAnd / xlOr / xlFilterValues
+  '以降
+  .AutoFilter Field:=iCol, Criteria1:=">=1/8/1989"
+  ```
 
-参考資料：
+- xlAnd / xlOr / xlFilterValues などの使い方  
+  https://excel-ubara.com/excelvba1/EXCELVBA389.html
+
+## 参考資料
 
 - The Ultimate Guide to Excel Filters with VBA Macros – AutoFilter Method  
   https://www.excelcampus.com/vba/macros-filters-autofilter-method/
